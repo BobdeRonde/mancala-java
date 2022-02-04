@@ -1,0 +1,57 @@
+plugins {
+    // Tell Gradle that we are builing java as a library (non-executable piece of code intended for use by other applications).
+    id 'java'
+    id 'java-library'
+    id 'myproject.java-conventions'
+    id 'checkstyle'
+}
+
+repositories {
+    // Specify the repository mirror that we want to download our dependencies from. JCentral is configured by default when creating a new Gradle project.
+    mavenCentral()
+}
+
+dependencies {
+    // Download JUnit so that we can use it in our tests.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+    reportsDirectory = layout.buildDirectory.dir('customJacocoReportDir')
+}
+
+test {
+    // For running our tests, use the test runner provided by JUnit.
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
+
+jacocoTestReport {
+    check.dependsOn jacocoTestCoverageVerification
+    reports {
+        xml.required = true
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.6
+            }
+        }
+    }
+}
+
+checkstyle {
+    ignoreFailures = false
+    maxErrors = 200
+}

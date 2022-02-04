@@ -1,0 +1,36 @@
+body {
+  font-family: 'Lato', sans-serif;
+
+  --primary-color: #007936;
+}
+
+.main-header {
+    background-color: white;
+    color: var(--primary-color);
+    font-size: 50px;
+    margin-bottom: 8px;
+}
+
+.main-navigation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--primary-color);
+    font-size: 1.3rem;
+    height: 45px;
+}
+
+.main-navigation a {
+    color: white;
+    text-decoration: none;
+}
+
+.main-header div {
+    display: flex;
+    align-items: center;
+}
+
+.main-header img {
+    height: 50px;
+    margin: 6px;
+}
